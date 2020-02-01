@@ -1,15 +1,46 @@
-# Datasets
+# [Dataset] EEG-IO 
+EEG dataset recording for 20 subjects for involuntary eye blinks (i.e., forced, when an external stimulation was given) collected on OpenBCI headset
 
-This repository contains the datasets that the AI team is currently working with or has worked with in the past. There are two folders contained within: **original** and **processed**. The former contains data taken directly from a public dataset and that has simply been packaged in a more convenient format (i.e. a consolidated archive). The latter contains data that has had some form of processing done to it by the AI team (i.e. noise filtering) to facilitate any further work that may need to be done with such data.
+## Citing the Dataset
+----------------------------
 
-## List of Current Data
+The dataset is freely available for research use. Please cite the following publication if using
+<blockquote>
+  <p>Mohit Agarwal, Raghupathy Sivakumar<br />
+BLINK: A Fully Automated Unsupervised Algorithm for Eye-Blink Detection in EEG Signals<br />
+2019 57th Annual Allerton Conference on Communication, Control, and Computing (Allerton). IEEE, 2019.</p>
+</blockquote>
 
-The following is a list of datasets that are currently in the repository, along with any citations and links to the source from where the datasets were obtained (if applicable).
+## Dataset Specifications
+----------------------------
+*  **Sampling Frequency:** 250.0 samples per second
+*  **Electrodes:** Fp1 and Fp2
+*  **Total Subjects:** 20
+*  **Experiment:** Subjects were asked to blink when an external stimulation was provided
 
-### Original Datasets
+## Dataset Files
+----------------
+Raw EEG data is stored as `S<Sub_ID>_data.csv` and corresponding labels are stored in `S<Sub_ID>_labels.csv`
 
-- [Eye Blink Detection](https://github.com/meagmohit/BLINK) By Mohit Agarwal, Raghupathy Sivakumar. 57th Annual Allerton Conference on Communication, Control, and Computing (Allerton). IEEE, 2019.
+## Reading Data
+----------------
 
-### Processed Datasets
+A script `read_data.py` is provided to read the dataset 
 
-- Work in progress.
+#### Raw EEG data
+Data is stored in a .csv format where column 0 represents time, and column 1 and 2 represents raw EEG potentials (in uV) for channel 1 (Fp1) and channel 2 (Fp2) respectively.
+
+#### Labels
+* The first line is `corrupt, <n>` where n represents the total number of corrupt intervals
+* n following lines represent the start and end time of corrupt interval in seconds. A value of -1 means until the end.
+* The next line is 'blinks' which marks the starting of blinks
+* Blinks are arranged as `<blink_time>, <code>` where
+  *  `<blink_time>`: middle point of blink in seconds (where the minima appears in EEG)
+  * `<code>`: `0` is normal blink, `1` is blink when stimulation was given, `2` is soft blink
+
+
+## Contact
+----------------
+
+For any queries, contact Mohit Agarwal
+Email: me.agmohit@gmail.com
